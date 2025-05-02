@@ -53,6 +53,11 @@
                         ".svelte"
                     ],
                     "description": "File extensions to include when copying directories"
+                },
+                "copyToLLM.useRelativePaths": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Accompany the file name with the directory in which it is located within the project"
                 }
             }
         }

@@ -34,7 +34,8 @@ async function copySelectedToLLM(uris: vscode.Uri[]) {
     // Process individual files
     for (const file of files) {
         const fileContent = await fs.promises.readFile(file.fsPath, 'utf-8');
-        content += `${path.basename(file.fsPath)}:\n\`\`\`\n${fileContent}\n\`\`\`\n\n`;
+        const label = getDisplayPath(file.fsPath);
+        content += `${label}:\n\`\`\`\n${fileContent}\n\`\`\`\n\n`;
     }
 
     const document = await vscode.workspace.openTextDocument({
@@ -59,8 +60,8 @@ async function copyFolderToLLM(uris: vscode.Uri[]) {
 
 async function copyFileToClipboard(filePath: string) {
     const fileContent = await fs.promises.readFile(filePath, 'utf-8');
-    const fileName = path.basename(filePath);
-    const content = `${fileName}:\n\`\`\`\n${fileContent}\n\`\`\``;
+    const label = getDisplayPath(filePath);
+    const content = `${label}:\n\`\`\`\n${fileContent}\n\`\`\``;
     await vscode.env.clipboard.writeText(content);
     vscode.window.showInformationMessage('File content copied to clipboard');
 }
@@ -92,11 +93,31 @@ async function getFilesByExtensions(dirPath: string): Promise<string[]> {
 async function generateContent(basePath: string, files: string[]): Promise<string> {
     let content = '';
     for (const file of files) {
-        const relativePath = path.relative(basePath, file);
         const fileContent = await fs.promises.readFile(file, 'utf-8');
-        content += `${path.basename(basePath)}/${relativePath}:\n\`\`\`\n${fileContent}\n\`\`\`\n\n`;
+        const label = getDisplayPath(file, basePath);
+        content += `${label}:\n\`\`\`\n${fileContent}\n\`\`\`\n\n`;
     }
     return content;
 }
 
-export function deactivate() {}
+function getDisplayPath(filePath: string, basePathOverride?: string): string {
+    const config = vscode.workspace.getConfiguration('copyToLLM');
+    const useRelative = config.get<boolean>('useRelativePaths', false);
+    if (useRelative) {
+        const wsFolder = vscode.workspace.workspaceFolders?.[0].uri.fsPath;
+        if (wsFolder) {
+            // ruta relativa al workspace root, con slashes Unix
+            return path.relative(wsFolder, filePath).replace(/\\/g, '/');
+        }
+    }
+    // comportamiento por defecto: mismo que antes
+    if (basePathOverride) {
+        const relativeToBase = path.relative(basePathOverride, filePath).replace(/\\/g, '/');
+        const baseName = path.basename(basePathOverride);
+        return `${baseName}/${relativeToBase}`;
+    } else {
+        return path.basename(filePath);
+    }
+}
+
+export function deactivate() { }
