@@ -69,7 +69,28 @@ async function getFilesByExtensions(dirPath: string): Promise<string[]> {
     const files: string[] = [];
 
     const config = vscode.workspace.getConfiguration('copyToLLM');
-    const extensions = config.get<string[]>('extensions', ['.ts', '.tsx', '.mjs', '.ex', '.heex', '.svelte']);
+    const extensions = config.get<string[]>('extensions', [
+        // JavaScript and TypeScript
+        '.js', '.jsx', '.ts', '.tsx', '.mjs', '.cjs',
+        // Markup and templating
+        '.html', '.htm', '.xml', '.ejs', '.pug', '.jade', '.twig', '.erb', '.mustache', 'latte',
+        // Stylesheets
+        '.css', '.scss', '.sass', '.less', '.styl',
+        // Configuration and data
+        '.json', '.jsonc', '.yaml', '.yml', '.toml', '.ini', '.env',
+        // Documents and markdown
+        '.md', '.markdown', '.txt',
+        // Elixir and Phoenix templates
+        '.ex', '.exs', '.heex', '.leex', '.eex',
+        // Front-end frameworks and components
+        '.vue', '.svelte', '.astro',
+        // Programming languages and scripts
+        '.py', '.rb', '.php', '.java', '.c', '.cpp', '.h', '.hpp', '.go', '.rs',
+        '.swift', '.kt', '.kts', '.dart', '.sql', '.sh', '.bat', '.ps1',
+        // Other plain-text types
+        '.csv', '.tsv', '.cfg', '.conf'
+    ]);
+
 
     async function traverse(currentPath: string) {
         const entries = await fs.promises.readdir(currentPath, { withFileTypes: true });
