@@ -69,7 +69,7 @@ async function getFilesByExtensions(dirPath: string): Promise<string[]> {
     const files: string[] = [];
 
     const config = vscode.workspace.getConfiguration('copyToLLM');
-    const extensions = config.get<string[]>('extensions', ['.js', '.jsx', '.ts', '.tsx', '.mjs', '.cjs','.html', '.htm', '.xml', '.ejs', '.pug', '.jade', '.twig', '.erb', '.mustache', '.latte', '.css', '.scss', '.sass', '.less', '.styl', '.json', '.jsonc', '.yaml', '.yml', '.toml', '.ini', '.env', '.md', '.markdown', '.txt', '.ex', '.exs', '.heex', '.leex', '.eex', '.vue', '.svelte', '.astro', '.py', '.rb', '.php', '.java', '.c', '.cpp', '.h', '.hpp', '.go', '.rs', '.swift', '.kt', '.kts', '.dart', '.sql', '.sh', '.bat', '.ps1', '.csv', '.tsv', '.cfg', '.conf']);
+    const extensions = config.get<string[]>('extensions', [".js", ".jsx", ".ts", ".tsx", ".mjs", ".cjs", ".html", ".htm", ".xml", ".ejs", ".pug", ".jade", ".twig", ".erb", ".mustache", ".latte", ".css", ".scss", ".sass", ".less", ".styl", ".json", ".jsonc", ".yaml", ".yml", ".toml", ".ini", ".env", ".md", ".markdown", ".txt", ".ex", ".exs", ".heex", ".leex", ".eex", ".vue", ".svelte", ".astro", ".py", ".rb", ".php", ".java", ".c", ".cpp", ".h", ".hpp", ".go", ".rs", ".swift", ".kt", ".kts", ".dart", ".sql", ".sh", ".bat", ".ps1", ".csv", ".tsv", ".cfg", ".conf", ".properties", ".ics"]);
 
     async function traverse(currentPath: string) {
         const entries = await fs.promises.readdir(currentPath, { withFileTypes: true });
