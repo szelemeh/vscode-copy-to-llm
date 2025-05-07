@@ -46,6 +46,11 @@
                     },
                     "default": [".js", ".jsx", ".ts", ".tsx", ".mjs", ".cjs", ".html", ".htm", ".xml", ".ejs", ".pug", ".jade", ".twig", ".erb", ".mustache", ".latte", ".css", ".scss", ".sass", ".less", ".styl", ".json", ".jsonc", ".yaml", ".yml", ".toml", ".ini", ".env", ".md", ".markdown", ".txt", ".ex", ".exs", ".heex", ".leex", ".eex", ".vue", ".svelte", ".astro", ".py", ".rb", ".php", ".java", ".c", ".cpp", ".h", ".hpp", ".go", ".rs", ".swift", ".kt", ".kts", ".dart", ".sql", ".sh", ".bat", ".ps1", ".csv", ".tsv", ".cfg", ".conf", ".properties", ".ics"],
                     "description": "File extensions to include when copying directories"
+                },
+                "copyToLLM.useRelativePaths": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Accompany the file name with the directory in which it is located within the project"
                 }
             }
         }

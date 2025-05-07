@@ -63,24 +63,40 @@ You can copy the contents of the new document and paste it as the prompt of your
 
 ## Configuration
 
-You can customize which file types are included when processing directories. To do this:
+You can customize the extension behavior via **Settings** → **Extensions** → **Copy to LLM**.
 
-1. Open VS Code Settings (File > Preferences > Settings)
-2. Search for "Copy to LLM"
-3. Edit the "Copy to LLM: Extensions" setting to add or remove file extensions
+> ⚠️ **Important:** When copying an entire folder, **only files that match the configured extensions will be included**.
+> Files with extensions not listed in your settings will be skipped and **won't appear in the generated document**.
 
-Default included extensions:
+### Available Settings
+
+| Name                         | JSON Setting                   | Type         | Default                                                | Description                                                                           |
+| ---------------------------- | ------------------------------ | ------------ | ------------------------------------------------------ | ------------------------------------------------------------------------------------- |
+| **Extensions**         | `copyToLLM.extensions`       | `string[]` | `[".ts", ".tsx", ".mjs", ".ex", ".heex", ".svelte"]` | File extensions to include when copying directories.                                  |
+| **Use Relative Paths** | `copyToLLM.useRelativePaths` | `boolean`  | `false`                                              | Always accompany the file name with the directory in which it is located within the project. |
+
+### JSON Configuration Example
+
 ```json
-[".ts", ".tsx", ".mjs", ".ex", ".heex", ".svelte"]
+{
+  "copyToLLM.extensions": [
+    ".ts",
+    ".tsx",
+    ".mjs",
+    ".ex",
+    ".heex",
+    ".svelte"
+  ],
+  "copyToLLM.useRelativePaths": true
+}
 ```
 
 ## Example Output
 
-When you use "Copy to LLM" on a file or directory, the output will look similar to this:
-
-```markdown
-src/components/Button.tsx:
-```tsx
+> **With default settings**:
+````
+Button.tsx:
+```
 import React from 'react';
 
 const Button = ({ label, onClick }) => (
@@ -90,12 +106,13 @@ const Button = ({ label, onClick }) => (
 export default Button;
 ```
 
-src/utils/helpers.ts:
-```typescript
+helpers.ts:
+```
 export const capitalizeString = (str: string): string => {
   return str.charAt(0).toUpperCase() + str.slice(1);
 };
 ```
+````
 
 This format makes it easy to understand the structure of your code when sharing it with an LLM.
 
