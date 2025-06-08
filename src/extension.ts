@@ -85,6 +85,9 @@ async function copySelectedToLLM(uris: vscode.Uri[]) {
     content += `${label}:\n\`\`\`\n${fileContent}\n\`\`\`\n\n`;
   }
 
+  await vscode.env.clipboard.writeText(content);
+  vscode.window.showInformationMessage("Content copied to clipboard");
+
   const document = await vscode.workspace.openTextDocument({
     content: content,
     language: "markdown",
@@ -98,6 +101,10 @@ async function copyFolderToLLM(uris: vscode.Uri[]) {
     const files = await getFilesByExtensions(uri.fsPath);
     content += await generateContent(uri.fsPath, files);
   }
+
+  await vscode.env.clipboard.writeText(content);
+  vscode.window.showInformationMessage("Content copied to clipboard");
+
   const document = await vscode.workspace.openTextDocument({
     content: content,
     language: "markdown",
@@ -110,7 +117,7 @@ async function copyFileToClipboard(filePath: string) {
   const label = getDisplayPath(filePath);
   const content = `${label}:\n\`\`\`\n${fileContent}\n\`\`\``;
   await vscode.env.clipboard.writeText(content);
-  vscode.window.showInformationMessage("File content copied to clipboard");
+  vscode.window.showInformationMessage("Content copied to clipboard");
 }
 
 async function getFilesByExtensions(dirPath: string): Promise<string[]> {
