@@ -1,75 +1,139 @@
 {
-    "name": "copy-to-llm",
-    "displayName": "Copy to LLM",
-    "description": "Copy directory or file contents to LLM format",
-    "version": "0.0.3",
-    "engines": {
-        "vscode": "^1.60.0"
-    },
-    "categories": [
-        "Other"
+  "name": "copy-to-llm",
+  "displayName": "Copy to LLM",
+  "description": "Copy directory or file contents to LLM format",
+  "version": "0.0.4",
+  "engines": {
+    "vscode": "^1.60.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "icon": "icon.png",
+  "publisher": "Compile-TomaszKasperczyk",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TKasperczyk/vscode-copy-to-llm"
+  },
+  "activationEvents": [
+    "onCommand:extension.copyToLLM"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "extension.copyToLLM",
+        "title": "Copy to LLM"
+      }
     ],
-    "icon": "icon.png",
-    "publisher": "Compile-TomaszKasperczyk",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/TKasperczyk/vscode-copy-to-llm"
-    },
-    "activationEvents": [
-        "onCommand:extension.copyToLLM"
-    ],
-    "main": "./out/extension.js",
-    "contributes": {
-        "commands": [
-            {
-                "command": "extension.copyToLLM",
-                "title": "Copy to LLM"
-            }
-        ],
-        "menus": {
-            "explorer/context": [
-                {
-                    "command": "extension.copyToLLM",
-                    "group": "z_commands",
-                    "when": "explorerResourceIsFolder || resourceScheme == 'file'"
-                }
-            ]
-        },
-        "configuration": {
-            "type": "object",
-            "title": "Copy to LLM",
-            "properties": {
-                "copyToLLM.extensions": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    },
-                    "default": [".js", ".jsx", ".ts", ".tsx", ".mjs", ".cjs", ".html", ".htm", ".xml", ".ejs", ".pug", ".jade", ".twig", ".erb", ".mustache", ".latte", ".css", ".scss", ".sass", ".less", ".styl", ".json", ".jsonc", ".yaml", ".yml", ".toml", ".ini", ".env", ".md", ".markdown", ".txt", ".ex", ".exs", ".heex", ".leex", ".eex", ".vue", ".svelte", ".astro", ".py", ".rb", ".php", ".java", ".c", ".cpp", ".h", ".hpp", ".go", ".rs", ".swift", ".kt", ".kts", ".dart", ".sql", ".sh", ".bat", ".ps1", ".csv", ".tsv", ".cfg", ".conf", ".properties", ".ics"],
-                    "description": "File extensions to include when copying directories"
-                },
-                "copyToLLM.useRelativePaths": {
-                    "type": "boolean",
-                    "default": false,
-                    "description": "Accompany the file name with the directory in which it is located within the project"
-                }
-            }
+    "menus": {
+      "explorer/context": [
+        {
+          "command": "extension.copyToLLM",
+          "group": "z_commands",
+          "when": "explorerResourceIsFolder || resourceScheme == 'file'"
         }
+      ]
     },
-    "scripts": {
-        "vscode:prepublish": "npm run compile",
-        "compile": "tsc -p ./",
-        "watch": "tsc -watch -p ./",
-        "pretest": "npm run compile && npm run lint",
-        "lint": "eslint src --ext ts",
-        "test": "node ./out/test/runTest.js",
-        "package": "vsce package"
-    },
-    "devDependencies": {
-        "@types/vscode": "^1.60.0",
-        "@types/node": "^14.14.37",
-        "@typescript-eslint/eslint-plugin": "^4.22.0",
-        "@typescript-eslint/parser": "^4.22.0",
-        "eslint": "^7.25.0",
-        "typescript": "^4.2.4"
+    "configuration": {
+      "type": "object",
+      "title": "Copy to LLM",
+      "properties": {
+        "copyToLLM.extensions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [
+            ".js",
+            ".jsx",
+            ".ts",
+            ".tsx",
+            ".mjs",
+            ".cjs",
+            ".html",
+            ".htm",
+            ".xml",
+            ".ejs",
+            ".pug",
+            ".jade",
+            ".twig",
+            ".erb",
+            ".mustache",
+            ".latte",
+            ".css",
+            ".scss",
+            ".sass",
+            ".less",
+            ".styl",
+            ".json",
+            ".jsonc",
+            ".yaml",
+            ".yml",
+            ".toml",
+            ".ini",
+            ".env",
+            ".md",
+            ".markdown",
+            ".txt",
+            ".ex",
+            ".exs",
+            ".heex",
+            ".leex",
+            ".eex",
+            ".vue",
+            ".svelte",
+            ".astro",
+            ".py",
+            ".rb",
+            ".php",
+            ".java",
+            ".c",
+            ".cpp",
+            ".h",
+            ".hpp",
+            ".go",
+            ".rs",
+            ".swift",
+            ".kt",
+            ".kts",
+            ".dart",
+            ".sql",
+            ".sh",
+            ".bat",
+            ".ps1",
+            ".csv",
+            ".tsv",
+            ".cfg",
+            ".conf",
+            ".properties",
+            ".ics"
+          ],
+          "description": "File extensions to include when copying directories"
+        },
+        "copyToLLM.useRelativePaths": {
+          "type": "boolean",
+          "default": false,
+          "description": "Accompany the file name with the directory in which it is located within the project"
+        }
+      }
     }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js",
+    "package": "vsce package"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.60.0",
+    "@types/node": "^14.14.37",
+    "@typescript-eslint/eslint-plugin": "^4.22.0",
+    "@typescript-eslint/parser": "^4.22.0",
+    "eslint": "^7.25.0",
+    "typescript": "^4.2.4"
+  }
 }
